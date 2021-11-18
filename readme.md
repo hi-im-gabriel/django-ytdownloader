@@ -1,6 +1,6 @@
  <h1 align="center">YouTube Downloader</h1>
    <p align="center">
-    <a href="https://github.com/gabzin/django-ytdownloader/blob/master/license">
+    <a href="https://github.com/gabzin/django-ytdownloader/blob/main/LICENSE">
       <img src="https://img.shields.io/badge/license-MIT-red.svg" />
     </a>
     <a href="https://www.python.org/">
