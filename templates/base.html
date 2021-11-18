@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--Bootstrap css-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Page title/icon-->
+    <link rel="icon" href="{% static 'img/youtube.png' %}">
+    <title>YouTube Downloader</title>
+    <!--Device adaption-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--Google index-->
+    <meta name="description" content="Youtube downloader app" />
+    <meta name="author" content="Gabriel Tavares">
+</head>
+
+<body>
+    <div class="container-fluid">
+        {% block content %} {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
