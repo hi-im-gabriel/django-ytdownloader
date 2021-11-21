@@ -30,5 +30,5 @@ Install the dependencies and start the server.
 git clone https://github.com/gabzin/django-ytdownloader
 cd django-ytdownloader
 pip install -r requirements.txt
-python manage.py runsever
+python manage.py runserver
 ```
