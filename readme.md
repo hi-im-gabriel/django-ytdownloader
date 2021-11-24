@@ -9,14 +9,26 @@
 	<p align="center">⭐️ Star this project ⭐️</p>
   </p>
 <p align="center">
-  <img src="https://i.imgur.com/AMeIFi8.png" width="80%">
+  <img src="https://i.imgur.com/UGBIj8m.png"">
 </p>
-<p align="center">
-  <img src="https://i.imgur.com/gPSe8vs.png" width="100%">
-</p>
-<p align="center">
-  <img src="https://i.imgur.com/PLeYQt7.png" width="100%">
-</p>
+
+# Updates
+> # v2021.11
+> 
+> #### Added:
+> 
+> - Migration from pafy/youtube-dl to pytube (Performance reasons)
+> - Visual enhancement
+>
+> #### Bug fixes:
+>
+> - Error 404 handling
+>
+> #### Future updates:
+>
+> - 1080p60+ downloads
+> - Dark/Light mode option
+
 
 # Requirements
   - Python3+
@@ -24,11 +36,15 @@
 
 # Installation
 
-Install the dependencies and start the server.
-
 ```bash
 git clone https://github.com/gabzin/django-ytdownloader
 cd django-ytdownloader
 pip install -r requirements.txt
+python manage.py migrate
+```
+
+# Starting server
+
+```bash
 python manage.py runserver
 ```
