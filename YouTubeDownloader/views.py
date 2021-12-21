@@ -7,7 +7,7 @@ from pytube import YouTube
 from math import pow, floor, log
 from datetime import timedelta
 from requests import get
-from os import remove, system
+from os import system
 
 # Your YouTube V3 Api Key
 KEY = "AIzaSyD6-aEBMd2R0m_4VOqnq_Vj0866_enwjug"
@@ -50,11 +50,13 @@ def download_video(request, string=""):
 
         video_audio_streams = []
         audio_streams = []
-
-        #url = f"https://www.googleapis.com/youtube/v3/videos?id={yt_obj.video_id}&key={KEY}&part=statistics"
-        #video_stats = get(url).json()
-        #video_likes = video_stats['items'][0]['statistics']['likeCount']
-        #video_favs = video_stats['items'][0]['statistics']['favoriteCount']
+        try:
+            url = f"https://www.googleapis.com/youtube/v3/videos?id={yt_obj.video_id}&key={KEY}&part=statistics"
+            video_stats = get(url).json()
+            video_likes = video_stats['items'][0]['statistics']['likeCount']
+            video_favs = video_stats['items'][0]['statistics']['favoriteCount']
+        except:
+            video_likes = 0
 
         # List of video streams dictionaries
         for s in videos:
@@ -82,7 +84,7 @@ def download_video(request, string=""):
         # Full content to render
         context = {
             'form' : form,'title' : yt_obj.title,
-            'rating': int(rating), 'rating_check' : int(rating) + 1 if float(int(rating)) != rating else 6,
+            'rating': video_likes, 'rating_check' : int(rating) + 1 if float(int(rating)) != rating else 6,
             'rating_list' : [1,2,3,4,5], 'thumb' : yt_obj.thumbnail_url, 'author' : yt_obj.author,
             'author_url' : yt_obj.channel_url,
             'duration' : str(timedelta(seconds=yt_obj.length)), 'views' : humanformat(yt_obj.views) if yt_obj.views >= 1000 else yt_obj.views,
