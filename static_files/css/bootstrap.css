@@ -426,7 +426,7 @@ h6 {
 
 .lead {
     font-size: 1.25rem;
-    font-weight: 300
+    font-weight: 300;
 }
 
 .display-1 {
@@ -1620,7 +1620,7 @@ pre code {
 .table th {
     padding: .75rem;
     vertical-align: top;
-    border-top: 1px solid #dee2e6
+    border: 1px solid #dee2e6
 }
 
 .table thead th {
@@ -1814,7 +1814,7 @@ pre code {
 .table .thead-light th {
     color: #495057;
     background-color: #e9ecef;
-    border-color: #dee2e6
+    border-color: transparent;
 }
 
 .table-dark {
@@ -5334,7 +5334,8 @@ input[type=submit].btn-block {
     -ms-flex-direction: column;
     flex-direction: column;
     padding-left: 0;
-    margin-bottom: 0
+    margin-bottom: 0;
+    align-items: center
 }
 
 .list-group-item-action {
@@ -7828,6 +7829,10 @@ button.bg-dark:hover {
 .mt-5,
 .my-5 {
     margin-top: 3rem!important
+}
+
+.mt-6 {
+    margin-top: 5rem!important
 }
 
 .mr-5,

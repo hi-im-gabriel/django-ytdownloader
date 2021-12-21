@@ -1,11 +1,16 @@
 #Imports
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import FileResponse
 from .forms import DownloadForm
 from pytube import YouTube
 from math import pow, floor, log
 from datetime import timedelta
+from requests import get
+from os import remove, system
 
+# Your YouTube V3 Api Key
+KEY = "AIzaSyD6-aEBMd2R0m_4VOqnq_Vj0866_enwjug"
 
 # Convert from bytes
 def convertsize(size_bytes):
@@ -26,7 +31,7 @@ def humanformat(number):
 
 #When click search button
 def download_video(request, string=""):
-    global context
+    global video_url
     form = DownloadForm(request.POST or None)
     if form.is_valid():
         video_url = form.cleaned_data.get("url")
@@ -46,13 +51,18 @@ def download_video(request, string=""):
         video_audio_streams = []
         audio_streams = []
 
+        #url = f"https://www.googleapis.com/youtube/v3/videos?id={yt_obj.video_id}&key={KEY}&part=statistics"
+        #video_stats = get(url).json()
+        #video_likes = video_stats['items'][0]['statistics']['likeCount']
+        #video_favs = video_stats['items'][0]['statistics']['favoriteCount']
+
         # List of video streams dictionaries
         for s in videos:
             video_audio_streams.append({
                 'resolution' : s.resolution,
                 'extension' : s.mime_type.replace('video/',''),
                 'file_size' : convertsize(s.filesize),
-                'video_url' : s.url
+                'video_url' : s.url, 'itag' : s.itag
             })
         
         # List of audio streams dictionaries
@@ -61,13 +71,18 @@ def download_video(request, string=""):
                 'resolution' : s.abr,
                 'extension' : s.mime_type.replace('audio/',''),
                 'file_size' : convertsize(s.filesize),
-                'video_url' : s.url
+                'video_url' : s.url, 'itag' : s.itag
             })
+
+        if yt_obj.rating == None:
+            rating = 5
+        else:
+            rating = yt_obj.rating
 
         # Full content to render
         context = {
             'form' : form,'title' : yt_obj.title,
-            'rating': int(yt_obj.rating), 'rating_check' : int(yt_obj.rating) + 1 if float(int(yt_obj.rating)) != yt_obj.rating else 6,
+            'rating': int(rating), 'rating_check' : int(rating) + 1 if float(int(rating)) != rating else 6,
             'rating_list' : [1,2,3,4,5], 'thumb' : yt_obj.thumbnail_url, 'author' : yt_obj.author,
             'author_url' : yt_obj.channel_url,
             'duration' : str(timedelta(seconds=yt_obj.length)), 'views' : humanformat(yt_obj.views) if yt_obj.views >= 1000 else yt_obj.views,
@@ -77,4 +92,19 @@ def download_video(request, string=""):
         return render(request, 'home.html', context)
         
     return render(request, 'home.html',{ 'form': form })
+
+def btn_video(request):
+    if request.method == 'POST':
+        if request.POST['itag']:
+            yt_obj = YouTube(video_url)
+            selected = yt_obj.streams.get_by_itag(int(request.POST['itag']))
+
+            extension = selected.mime_type.replace('video/','').replace('audio/','')
+            file_name = yt_obj.title + '.' + extension
+
+            response = FileResponse(open(selected.download(skip_existing=True), 'rb'), filename=file_name, as_attachment=True)
+
+            system(f'rm *.{extension}')
+
+            return response
 

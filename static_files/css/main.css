@@ -1,6 +1,29 @@
-html, body {
+html,
+body {
     padding: 0;
     margin-top: 40px;
     background-color: #181818;
     color: #ffffff;
+}
+
+canvas {
+    display: block;
+}
+
+#particles-js {
+    background-color: #181818;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+ul {
+    list-style: none;
 }

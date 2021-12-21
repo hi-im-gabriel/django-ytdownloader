@@ -47,25 +47,14 @@
 
     <div class="col-md-4 ml-auto mr-auto mt-5 pt-5">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
-                <p class="lead">Duration <i class="fa fa-clock-o"></i>: {{ duration }}</p>
+            <li class="border-0 pl-2 pr-2 pb-0 text-center">
+                <p class="lead"><i class="bi bi-clock-history"></i> : {{ duration }}</p>
             </li>
-            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
-                <p class="lead">Views <i class="fa fa-eye"></i>: {{ views }}</p>
+            <li class="border-0 pl-2 pr-2 pb-0 text-center">
+                <p class="lead"><i class="bi bi-eye"></i> : {{ views }}</p>
             </li>
-            <li class="list-group-item border-0 pl-2 pr-2 pb-0 text-center" style="background-color: #181818;">
-                <p class="lead">Rating:  
-                {% for i in rating_list%}
-                    {% if rating >= i %}
-                        <span class="fa fa-star"></span>
-                    {% elif i == rating_check %}
-                        <span class="fa fa-star-half-o"></span>
-                    {% else %}
-                        <span class="fa fa-star-o"></span>
-                    {% endif %}
-                {% endfor %}
-                </p>
-                
+            <li class="border-0 pl-2 pr-2 pb-0 text-center">
+                <p class="lead text-center font-italic"><i class="bi bi-hand-thumbs-up"></i> : {{ rating }}</p>
             </li>
         </ul>
     </div>
@@ -76,7 +65,7 @@
         <p class="h3 text-center mt-5 mb-5">Video</p>
         <table class="table mt-5">
             <thead class="thead-light">
-                <tr>
+                <tr align="center">
                     <th scope="col">Resolution</th>
                     <th scope="col">File Size</th>
                     <th scope="col">Extension</th>
@@ -85,11 +74,21 @@
             </thead>
             <tbody>
                 {% for stream in streams %}
-                <tr>
-                    <td>{{ stream.resolution }}</td>
+                <tr align="center">
+                    {% if stream.resolution == '720p' %}
+                        <td>{{ stream.resolution }} <i class="bi bi-badge-hd" style="color: #ff726f;"></i></td>
+                    {% else %}
+                        <td>{{ stream.resolution }}</td>
+                    {% endif %}
                     <td>{{ stream.file_size }}</td>
                     <td>{{ stream.extension }}</td>
-                    <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ stream.extension }}" target="_blank">Download <i class=" fa fa-download"></i></a></td>
+                    <td>
+                        <form autocomplete="off" action="{% url 'download' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ stream.itag }}" name="itag">
+                            <input type="submit" value="Download" class="btn btn-info btn-block">
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -98,7 +97,7 @@
         <p class="h3 text-center mt-5 mb-5">Audio Only</p>
         <table class="table mt-5 mb-5">
             <thead class="thead-light">
-                <tr>
+                <tr align="center">
                     <th scope="col">Resolution</th>
                     <th scope="col">File Size</th>
                     <th scope="col">Extension</th>
@@ -107,15 +106,22 @@
             </thead>
             <tbody>
                 {% for stream in stream_audio %}
-                <tr>
+                <tr align="center">
                     <td>{{ stream.resolution }}</td>
                     <td>{{ stream.file_size }}</td>
                     <td>{{ stream.extension }}</td>
-                    <td><a href="{{ stream.video_url }}" style="text-decoration: none;" download="{{ title }}.{{ extension }}" target="_blank">Download <i class=" fa fa-download"></i></a></td>
+                    <td>
+                        <form autocomplete="off" action="{% url 'download' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ stream.itag }}" name="itag">
+                            <input type="submit" value="Download" class="btn btn-info btn-block">
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-{% endif %} {% endblock %}
+{% endif %}
+{% endblock %}
