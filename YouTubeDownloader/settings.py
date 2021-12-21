@@ -45,7 +45,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 ROOT_URLCONF = 'YouTubeDownloader.urls'
 
@@ -108,8 +111,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static_files")]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
+
+STATIC_URL = '/static_files/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
