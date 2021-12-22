@@ -83,11 +83,7 @@
                     <td>{{ stream.file_size }}</td>
                     <td>{{ stream.extension }}</td>
                     <td>
-                        <form autocomplete="off" action="{% url 'download' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{ stream.itag }}" name="itag">
-                            <input type="submit" value="Download" class="btn btn-info btn-block">
-                        </form>
+                        <a class="btn btn-info btn-block" href="{{ stream.video_url }}" target="_blank" download="{{ stream.file_name }}">Download</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -111,11 +107,7 @@
                     <td>{{ stream.file_size }}</td>
                     <td>{{ stream.extension }}</td>
                     <td>
-                        <form autocomplete="off" action="{% url 'download' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{ stream.itag }}" name="itag">
-                            <input type="submit" value="Download" class="btn btn-info btn-block">
-                        </form>
+                        <a class="btn btn-info btn-block" href="{{ stream.video_url }}" target="_blank" download="{{ stream.file_name }}">Download</a>
                     </td>
                 </tr>
                 {% endfor %}
