@@ -24,7 +24,7 @@ SECRET_KEY = ';ycuh^rx/b(]]/?!6za.833=yu$d~4,[rzh$febpvy6c6=sjrr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['*'] #.vercel.app
 
 # Application definition
 
@@ -45,7 +45,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
@@ -110,10 +109,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
-
-STATIC_URL = '/static_files/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static_files")]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
