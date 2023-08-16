@@ -1,4 +1,4 @@
- <h1 align="center">YouTube Downloader</h1>
+ <h1 align="center">(DEPRECATED)YouTube Downloader<br>Updated version: https://github.com/gabzin/downtube-nextjs</h1>
    <p align="center">
     <a href="https://github.com/gabzin/django-ytdownloader/blob/main/LICENSE">
       <img src="https://img.shields.io/badge/license-MIT-red.svg" />
